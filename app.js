@@ -1,61 +1,40 @@
 let amigos = [];
 
-// Actualizar lista de amigos
-function actualizarLista() {
-    const amigoSecreto = document.getElementById('listaAmigos');
-    amigoSecreto.innerHTML = ''; // Limpiar la lista antes de mostrarla
+function agregarAmigo() {
+    const input = document.getElementById("amigo");
+    const nombre = input.value.trim();
+    
+    if (nombre === "") {
+        alert("Por favor, ingrese un nombre válido.");
+        return;
+    }
+    
+    amigos.push(nombre);
+    actualizarLista();
+    input.value = "";
+}
 
-    amigos.forEach(amigo => {
-        const li = document.createElement('li');
+function actualizarLista() {
+    const lista = document.getElementById("listaAmigos");
+    lista.innerHTML = "";
+    
+    amigos.forEach((amigo, index) => {
+        const li = document.createElement("li");
         li.textContent = amigo;
-        amigoSecreto.appendChild(li);
+        lista.appendChild(li);
     });
 }
 
-// Función para agregar amigo
-function agregarAmigo() {
-    const inputAmigo = document.getElementById('amigo');
-    const amigo = inputAmigo.value.trim();
-
-    if (amigo === '') {
-        alert('Por favor, ingresa un nombre.');
-        inputAmigo.style.border = '2px solid red';
-        return;
-    }
-
-    // Verificar que el nombre no se repita
-    if (amigos.includes(amigo)) {
-        alert('El amigo ya está en la lista.');
-        return;
-    }
-
-    inputAmigo.style.border = ''; // Restablecer borde si la entrada es válida
-    amigos.push(amigo);
-    inputAmigo.value = ''; // Limpiar el campo de entrada
-
-    actualizarLista();
-}
-
-// Evento para agregar amigo al presionar "Enter"
-document.getElementById('amigo').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        agregarAmigo();
-    }
-});
-
-// Mostrar amigos en la lista
-function mostrarAmigos() {
-    actualizarLista();
-}
-
-// Función para sortear un amigo secreto
 function sortearAmigo() {
-    if (amigos.length < 2) {
-        alert('Debe haber al menos dos amigos para el sorteo.');
+    if (amigos.length === 0) {
+        alert("Agregue al menos un amigo antes de sortear :3.");
         return;
     }
-
-    const amigoSecreto = Math.floor(Math.random() * amigos.length);
-    const amigoSorteado = amigos[amigoSecreto];
-    document.getElementById('resultado').innerHTML = `<strong>El amigo secreto es:</strong> ${amigoSorteado}`;
+    
+    const indiceAleatorio = Math.floor(Math.random() * amigos.length);
+    const amigoSorteado = amigos[indiceAleatorio];
+    
+    const resultado = document.getElementById("resultado");
+    resultado.innerHTML = <li>Amigo Secreto: <strong>${amigoSorteado}</strong></li>;
 }
+
